@@ -170,3 +170,21 @@ class ProductAttributeForm(forms.ModelForm):
         # Add cross-field validation logic here
         return cleaned_data
 
+from django import forms
+from .models import Category, Product
+
+class ProductSearchForm(forms.Form):
+    q = forms.CharField(required=False, widget=forms.TextInput(attrs={'placeholder': 'Search products...', 'class': 'form-control'}))
+    category = forms.ModelChoiceField(queryset=Category.objects.all(), required=False, empty_label="All Categories", widget=forms.Select(attrs={'class': 'form-select'}))
+    brand = forms.CharField(required=False, widget=forms.TextInput(attrs={'placeholder': 'Brand', 'class': 'form-control'}))
+    min_price = forms.DecimalField(required=False, min_value=0, widget=forms.NumberInput(attrs={'placeholder': 'Min', 'class': 'form-control'}))
+    max_price = forms.DecimalField(required=False, min_value=0, widget=forms.NumberInput(attrs={'placeholder': 'Max', 'class': 'form-control'}))
+    min_rating = forms.ChoiceField(choices=[('', 'Any'), (4, '4+ Stars'), (3, '3+ Stars')], required=False, widget=forms.Select(attrs={'class': 'form-select'}))
+    in_stock = forms.BooleanField(required=False, widget=forms.CheckboxInput(attrs={'class': 'form-check-input'}))
+    sort_by = forms.ChoiceField(choices=[
+        ('-created_at', 'Newest'),
+        ('price', 'Price: Low to High'),
+        ('-price', 'Price: High to Low'),
+        ('-average_rating', 'Top Rated'),
+        ('-view_count', 'Most Popular')
+    ], required=False, widget=forms.Select(attrs={'class': 'form-select'}))
