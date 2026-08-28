@@ -1,0 +1,1 @@
+﻿AUTH_UI_VERSION = '2.0'
