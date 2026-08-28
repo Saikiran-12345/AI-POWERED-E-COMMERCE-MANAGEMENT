@@ -1,11 +1,10 @@
-﻿from django.contrib import admin
+from django.contrib import admin
 from .models import Review
+
 @admin.register(Review)
 class ReviewAdmin(admin.ModelAdmin):
-    list_display = ('product', 'customer', 'rating', 'is_approved', 'created_at')
-    list_filter = ('rating', 'is_approved', 'is_verified_purchase')
-    search_fields = ('product__name', 'customer__user__email')
-    actions = ['approve_reviews']
-    def approve_reviews(self, request, queryset):
-        queryset.update(is_approved=True)
-    approve_reviews.short_description = 'Approve selected reviews'
+    list_display = ['id', 'product', 'customer', 'rating', 'title', 'body']
+    search_fields = ['title']
+    list_filter = ['is_approved', 'is_verified_purchase']
+    list_per_page = 50
+
