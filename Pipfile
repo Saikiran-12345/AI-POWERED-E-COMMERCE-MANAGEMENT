@@ -1,0 +1,26 @@
+﻿[[source]]
+url = "https://pypi.org/simple"
+verify_ssl = true
+name = "pypi"
+
+[packages]
+django = "==4.2.7"
+djangorestframework = "==3.14.0"
+django-filter = "==23.3"
+django-cors-headers = "*"
+pillow = "*"
+pandas = "*"
+numpy = "*"
+scikit-learn = "*"
+joblib = "*"
+python-decouple = "*"
+whitenoise = "*"
+django-extensions = "*"
+pytest = "*"
+pytest-django = "*"
+faker = "*"
+
+[dev-packages]
+
+[requires]
+python_version = "3.12"
