@@ -1,0 +1,65 @@
+﻿{% extends 'base.html' %}
+{% block title %}Checkout — ShopAI{% endblock %}
+{% block content %}
+<h2 class="fw-bold mb-4"><i class="bi bi-credit-card me-2"></i>Checkout</h2>
+<div class="alert alert-warning"><i class="bi bi-exclamation-triangle me-2"></i><strong>Demo Mode:</strong> This is a simulated payment system. No real charges occur.</div>
+<div class="row g-4">
+  <div class="col-md-7">
+    <form method="post" action="/payments/process/" id="checkoutForm">
+      {% csrf_token %}
+      <div class="card mb-4">
+        <div class="card-header fw-bold"><i class="bi bi-geo-alt me-2"></i>Shipping Address</div>
+        <div class="card-body">
+          <div class="row g-3">
+            <div class="col-12"><label class="form-label">Address Line 1 *</label>
+              <input type="text" name="address1" class="form-control" required
+                     value="{% if profile %}{{ profile.address_line1 }}{% endif %}"></div>
+            <div class="col-md-6"><label class="form-label">City *</label>
+              <input type="text" name="city" class="form-control" required
+                     value="{% if profile %}{{ profile.city }}{% endif %}"></div>
+            <div class="col-md-3"><label class="form-label">State</label>
+              <input type="text" name="state" class="form-control"
+                     value="{% if profile %}{{ profile.state }}{% endif %}"></div>
+            <div class="col-md-3"><label class="form-label">PIN Code *</label>
+              <input type="text" name="pincode" class="form-control" required
+                     value="{% if profile %}{{ profile.pincode }}{% endif %}"></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card mb-4">
+        <div class="card-header fw-bold"><i class="bi bi-wallet2 me-2"></i>Payment Method</div>
+        <div class="card-body">
+          {% for value, label in payment_methods %}
+          <div class="form-check mb-2">
+            <input class="form-check-input" type="radio" name="payment_method" id="pm_{{ value }}" value="{{ value }}" {% if forloop.first %}checked{% endif %}>
+            <label class="form-check-label" for="pm_{{ value }}">{{ label }}</label>
+          </div>
+          {% endfor %}
+        </div>
+      </div>
+
+      <button type="submit" class="btn btn-success btn-lg w-100">
+        <i class="bi bi-lock me-2"></i>Place Order — ₹{{ cart.total }}
+      </button>
+    </form>
+  </div>
+  <div class="col-md-5">
+    <div class="card">
+      <div class="card-header fw-bold"><i class="bi bi-bag me-2"></i>Order Summary</div>
+      <div class="card-body">
+        {% for item in items %}
+        <div class="d-flex justify-content-between mb-2">
+          <span class="text-truncate me-3" style="max-width:200px">{{ item.product.name }} × {{ item.quantity }}</span>
+          <span class="fw-semibold">₹{{ item.total_price }}</span>
+        </div>
+        {% endfor %}
+        <hr>
+        <div class="d-flex justify-content-between fw-bold fs-5 text-primary">
+          <span>Total</span><span>₹{{ cart.total }}</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

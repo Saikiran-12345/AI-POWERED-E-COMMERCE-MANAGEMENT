@@ -1,0 +1,22 @@
+﻿{% extends 'base.html' %}
+{% block title %}Notifications — ShopAI{% endblock %}
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-4">
+  <h2 class="fw-bold"><i class="bi bi-bell me-2"></i>Notifications</h2>
+  <form method="post" action="/notifications/mark-all-read/">
+    {% csrf_token %}
+    <button class="btn btn-outline-primary btn-sm">Mark All as Read</button>
+  </form>
+</div>
+{% for notif in notifications %}
+<div class="card mb-2 notif-item {% if not notif.is_read %}unread{% endif %}">
+  <div class="card-body py-2">
+    <h6 class="fw-bold mb-1">{{ notif.title }}</h6>
+    <p class="small text-muted mb-1">{{ notif.message }}</p>
+    <small class="text-muted">{{ notif.created_at|timesince }} ago</small>
+  </div>
+</div>
+{% empty %}
+<div class="empty-state"><i class="bi bi-bell-slash"></i><h4>No notifications</h4></div>
+{% endfor %}
+{% endblock %}

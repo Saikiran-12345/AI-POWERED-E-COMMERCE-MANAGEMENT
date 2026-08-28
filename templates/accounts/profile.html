@@ -1,0 +1,66 @@
+﻿{% extends 'base.html' %}
+{% block title %}My Profile — ShopAI{% endblock %}
+{% block content %}
+<div class="row">
+  <div class="col-md-3">
+    <div class="card text-center p-4">
+      <i class="bi bi-person-circle text-primary" style="font-size:5rem"></i>
+      <h5 class="mt-2 fw-bold">{{ user.get_full_name }}</h5>
+      <span class="badge bg-primary">{{ user.role }}</span>
+      <p class="text-muted small mt-2">Member since {{ user.date_joined|date:"M Y" }}</p>
+    </div>
+    <div class="list-group mt-3">
+      <a href="{% url 'accounts:profile' %}" class="list-group-item list-group-item-action active">
+        <i class="bi bi-person me-2"></i>Profile
+      </a>
+      <a href="{% url 'accounts:change_password' %}" class="list-group-item list-group-item-action">
+        <i class="bi bi-lock me-2"></i>Change Password
+      </a>
+      <a href="{% url 'orders:list' %}" class="list-group-item list-group-item-action">
+        <i class="bi bi-bag me-2"></i>My Orders
+      </a>
+    </div>
+  </div>
+  <div class="col-md-9">
+    {% if messages %}{% for m in messages %}<div class="alert alert-{{ m.tags }}">{{ m }}</div>{% endfor %}{% endif %}
+    <div class="card mb-4">
+      <div class="card-header fw-bold"><i class="bi bi-person-fill me-2"></i>Basic Information</div>
+      <div class="card-body">
+        <form method="post" enctype="multipart/form-data">
+          {% csrf_token %}
+          <div class="row">
+            <div class="col-md-6 mb-3">
+              <label class="form-label">First Name</label>{{ user_form.first_name }}
+            </div>
+            <div class="col-md-6 mb-3">
+              <label class="form-label">Last Name</label>{{ user_form.last_name }}
+            </div>
+          </div>
+          <div class="mb-3"><label class="form-label">Phone</label>{{ user_form.phone_number }}</div>
+          <button type="submit" class="btn btn-primary">
+            <i class="bi bi-check-lg me-2"></i>Save Changes
+          </button>
+        </form>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-header fw-bold"><i class="bi bi-geo-alt me-2"></i>Address & Preferences</div>
+      <div class="card-body">
+        <form method="post">
+          {% csrf_token %}
+          <div class="row">
+            <div class="col-12 mb-3"><label class="form-label">Address Line 1</label>{{ profile_form.address_line1 }}</div>
+            <div class="col-12 mb-3"><label class="form-label">Address Line 2</label>{{ profile_form.address_line2 }}</div>
+            <div class="col-md-4 mb-3"><label class="form-label">City</label>{{ profile_form.city }}</div>
+            <div class="col-md-4 mb-3"><label class="form-label">State</label>{{ profile_form.state }}</div>
+            <div class="col-md-4 mb-3"><label class="form-label">PIN Code</label>{{ profile_form.pincode }}</div>
+          </div>
+          <button type="submit" class="btn btn-primary">
+            <i class="bi bi-check-lg me-2"></i>Update Address
+          </button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

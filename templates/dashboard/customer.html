@@ -1,0 +1,99 @@
+﻿{% extends 'base.html' %}
+{% block title %}My Dashboard — ShopAI{% endblock %}
+{% block content %}
+<h2 class="fw-bold mb-4"><i class="bi bi-person-circle me-2"></i>Welcome back, {{ user.get_short_name }}!</h2>
+
+<div class="row g-4 mb-4">
+  {% if customer %}
+  <div class="col-md-3">
+    <div class="stat-card">
+      <div class="stat-icon bg-primary bg-opacity-10 text-primary"><i class="bi bi-bag"></i></div>
+      <div><div class="stat-value">{{ customer.order_count }}</div><div class="stat-label">Total Orders</div></div>
+    </div>
+  </div>
+  <div class="col-md-3">
+    <div class="stat-card">
+      <div class="stat-icon bg-success bg-opacity-10 text-success"><i class="bi bi-currency-rupee"></i></div>
+      <div><div class="stat-value">₹{{ customer.total_spent|floatformat:0 }}</div><div class="stat-label">Total Spent</div></div>
+    </div>
+  </div>
+  <div class="col-md-3">
+    <div class="stat-card">
+      <div class="stat-icon bg-warning bg-opacity-10 text-warning"><i class="bi bi-star"></i></div>
+      <div><div class="stat-value">{{ customer.loyalty_points }}</div><div class="stat-label">Loyalty Points</div></div>
+    </div>
+  </div>
+  <div class="col-md-3">
+    <div class="stat-card">
+      <div class="stat-icon bg-info bg-opacity-10 text-info"><i class="bi bi-graph-up"></i></div>
+      <div><div class="stat-value">₹{{ customer.average_order_value }}</div><div class="stat-label">Avg. Order Value</div></div>
+    </div>
+  </div>
+  {% endif %}
+</div>
+
+<div class="row g-4">
+  <div class="col-md-8">
+    <div class="card mb-4">
+      <div class="card-header fw-bold d-flex justify-content-between">
+        <span><i class="bi bi-bag me-2"></i>Recent Orders</span>
+        <a href="/orders/" class="btn btn-sm btn-outline-primary">View All</a>
+      </div>
+      <div class="card-body p-0">
+        <div class="table-responsive">
+          <table class="table mb-0">
+            <thead><tr><th>Order #</th><th>Date</th><th>Total</th><th>Status</th></tr></thead>
+            <tbody>
+              {% for order in recent_orders %}
+              <tr>
+                <td><a href="/orders/{{ order.pk }}/">#{{ order.order_number }}</a></td>
+                <td>{{ order.created_at|date:"M d" }}</td>
+                <td class="fw-bold">₹{{ order.total_amount }}</td>
+                <td><span class="badge status-{{ order.status|lower }}">{{ order.get_status_display }}</span></td>
+              </tr>
+              {% empty %}<tr><td colspan="4" class="text-center text-muted p-3">No orders yet. <a href="/products/">Start shopping!</a></td></tr>{% endfor %}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-4">
+    <div class="card">
+      <div class="card-header fw-bold"><i class="bi bi-stars me-2"></i>Quick Links</div>
+      <div class="list-group list-group-flush">
+        <a href="/products/" class="list-group-item list-group-item-action"><i class="bi bi-shop me-2"></i>Browse Products</a>
+        <a href="/cart/" class="list-group-item list-group-item-action"><i class="bi bi-cart me-2"></i>My Cart <span class="badge bg-primary ms-1">{{ cart_count }}</span></a>
+        <a href="/wishlist/" class="list-group-item list-group-item-action"><i class="bi bi-heart me-2"></i>My Wishlist</a>
+        <a href="/recommendations/" class="list-group-item list-group-item-action"><i class="bi bi-stars me-2"></i>Recommendations</a>
+        <a href="/accounts/profile/" class="list-group-item list-group-item-action"><i class="bi bi-person me-2"></i>Edit Profile</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% if recommended_products %}
+<div class="mt-4">
+  <h4 class="section-title"><i class="bi bi-stars me-2"></i>Recommended For You</h4>
+  <div class="row row-cols-2 row-cols-md-6 g-3">
+    {% for product in recommended_products %}
+    <div class="col">
+      <div class="card h-100 hover-lift product-card">
+        <a href="{{ product.get_absolute_url }}">
+          {% if product.main_image %}
+          <img src="{{ product.main_image.url }}" class="card-img-top" alt="{{ product.name }}" style="height:120px">
+          {% else %}
+          <div class="product-img-placeholder" style="height:120px"><i class="bi bi-image"></i></div>
+          {% endif %}
+        </a>
+        <div class="card-body p-2">
+          <p class="small fw-semibold text-truncate mb-1">{{ product.name }}</p>
+          <span class="text-primary fw-bold small">₹{{ product.discounted_price }}</span>
+        </div>
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+</div>
+{% endif %}
+{% endblock %}

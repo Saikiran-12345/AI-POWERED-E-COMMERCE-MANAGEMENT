@@ -1,0 +1,55 @@
+﻿{% extends 'base.html' %}
+{% block title %}My Wishlist — ShopAI{% endblock %}
+{% block content %}
+<h2 class="fw-bold mb-4"><i class="bi bi-heart me-2"></i>My Wishlist
+  <span class="badge bg-danger ms-2">{{ wishlist.item_count }}</span>
+</h2>
+{% if items %}
+<div class="row row-cols-1 row-cols-md-4 g-4">
+  {% for item in items %}
+  <div class="col">
+    <div class="card h-100 hover-lift product-card">
+      <a href="{{ item.product.get_absolute_url }}">
+        {% if item.product.main_image %}
+        <img src="{{ item.product.main_image.url }}" class="card-img-top" alt="{{ item.product.name }}">
+        {% else %}
+        <div class="product-img-placeholder card-img-top"><i class="bi bi-image"></i></div>
+        {% endif %}
+      </a>
+      <div class="card-body">
+        <p class="text-muted small mb-1">{{ item.product.category.name }}</p>
+        <h6 class="fw-semibold text-truncate-2">{{ item.product.name }}</h6>
+        <div class="fw-bold text-primary mb-2">₹{{ item.product.discounted_price }}</div>
+        {% if item.product.is_in_stock %}
+        <form method="post" action="/wishlist/move-to-cart/{{ item.pk }}/">
+          {% csrf_token %}
+          <button type="submit" class="btn btn-primary btn-sm w-100 mb-2">
+            <i class="bi bi-cart-plus me-1"></i>Move to Cart
+          </button>
+        </form>
+        {% else %}
+        <button class="btn btn-secondary btn-sm w-100 mb-2" disabled>Out of Stock</button>
+        {% endif %}
+        <form method="post" action="/wishlist/remove/{{ item.pk }}/">
+          {% csrf_token %}
+          <button type="submit" class="btn btn-outline-danger btn-sm w-100">
+            <i class="bi bi-trash me-1"></i>Remove
+          </button>
+        </form>
+      </div>
+      <div class="card-footer text-muted small">
+        Added {{ item.added_at|date:"M d, Y" }}
+      </div>
+    </div>
+  </div>
+  {% endfor %}
+</div>
+{% else %}
+<div class="empty-state">
+  <i class="bi bi-heart"></i>
+  <h4>Your wishlist is empty</h4>
+  <p class="text-muted">Save products you love for later</p>
+  <a href="/products/" class="btn btn-primary btn-lg"><i class="bi bi-shop me-2"></i>Explore Products</a>
+</div>
+{% endif %}
+{% endblock %}
