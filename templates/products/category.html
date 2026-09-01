@@ -1,0 +1,100 @@
+﻿{% extends 'base.html' %}
+{% block title %}{{ category.name }} - ShopAI{% endblock %}
+{% block nav_products %}active{% endblock %}
+{% block content %}
+<div class="row">
+  <div class="col-md-3">
+    <div class="sidebar mb-4">
+      <h5 class="fw-bold mb-3"><i class="bi bi-tags me-2"></i>Subcategories</h5>
+      {% if subcategories %}
+      <div class="list-group list-group-flush">
+        {% for sub in subcategories %}
+        <a href="/products/category/{{ sub.slug }}/" class="list-group-item list-group-item-action border-0 px-0 text-dark">
+          {{ sub.name }}
+        </a>
+        {% endfor %}
+      </div>
+      {% else %}
+      <p class="text-muted small">No subcategories available.</p>
+      {% endif %}
+      <a href="/products/" class="btn btn-outline-primary btn-sm w-100 mt-3">Back to All Products</a>
+    </div>
+  </div>
+
+  <div class="col-md-9">
+    <div class="d-flex justify-content-between align-items-center mb-4 pb-2 border-bottom">
+      <div>
+        <h3 class="fw-bold mb-0 text-primary">{{ category.name }}</h3>
+        {% if category.description %}
+        <p class="text-muted mb-0 mt-1">{{ category.description }}</p>
+        {% endif %}
+      </div>
+      <span class="badge bg-primary fs-6">{{ page_obj.paginator.count }} items</span>
+    </div>
+
+    {% if products %}
+    <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-4">
+      {% for product in products %}
+      <div class="col">
+        <div class="card product-card h-100 position-relative">
+          <a href="{{ product.get_absolute_url }}">
+            {% if product.main_image %}
+            <img src="{{ product.main_image.url }}" class="card-img-top" alt="{{ product.name }}" style="height:200px; object-fit:cover;">
+            {% else %}
+            <div class="product-img-placeholder card-img-top" style="height:200px; display:flex; align-items:center; justify-content:center; background:#f8f9fa;">
+              <i class="bi bi-image fs-1 text-muted"></i>
+            </div>
+            {% endif %}
+          </a>
+          <div class="card-body d-flex flex-column">
+            <p class="text-muted small mb-1">{{ product.category.name }}</p>
+            <h6 class="fw-bold mb-2">
+              <a href="{{ product.get_absolute_url }}" class="text-dark text-decoration-none">{{ product.name }}</a>
+            </h6>
+            <div class="mt-auto">
+              <span class="fs-5 fw-bold text-primary">₹{{ product.price }}</span>
+              {% if user.is_authenticated %}
+              <form method="post" action="/cart/add/{{ product.pk }}/" class="mt-2">
+                {% csrf_token %}
+                <input type="hidden" name="quantity" value="1">
+                <button type="submit" class="btn btn-primary btn-sm w-100">
+                  <i class="bi bi-cart-plus me-1"></i>Add to Cart
+                </button>
+              </form>
+              {% endif %}
+            </div>
+          </div>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+
+    {% if is_paginated %}
+    <nav class="mt-5">
+      <ul class="pagination justify-content-center">
+        {% if page_obj.has_previous %}
+        <li class="page-item"><a class="page-link" href="?page={{ page_obj.previous_page_number }}">Previous</a></li>
+        {% endif %}
+        {% for num in page_obj.paginator.page_range %}
+        <li class="page-item {% if page_obj.number == num %}active{% endif %}">
+          <a class="page-link" href="?page={{ num }}">{{ num }}</a>
+        </li>
+        {% endfor %}
+        {% if page_obj.has_next %}
+        <li class="page-item"><a class="page-link" href="?page={{ page_obj.next_page_number }}">Next</a></li>
+        {% endif %}
+      </ul>
+    </nav>
+    {% endif %}
+
+    {% else %}
+    <div class="text-center py-5">
+      <i class="bi bi-box-seam display-1 text-muted mb-3"></i>
+      <h4>No products in this category yet.</h4>
+      <a href="/products/" class="btn btn-primary mt-3">Continue Shopping</a>
+    </div>
+    {% endif %}
+  </div>
+</div>
+{% endblock %}
+

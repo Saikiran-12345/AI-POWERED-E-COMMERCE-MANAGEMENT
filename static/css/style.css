@@ -1,0 +1,166 @@
+﻿/* Flipkart Inspired Theme */
+:root {
+    --fk-blue: #2874f0;
+    --fk-yellow: #fb641b; /* Using their signature orange/yellow for actions */
+    --fk-bg: #f1f3f6;
+    --fk-text: #212121;
+    --fk-light-text: #878787;
+    --fk-white: #ffffff;
+}
+
+body {
+    background-color: var(--fk-bg) !important;
+    color: var(--fk-text) !important;
+    font-family: Roboto, Arial, sans-serif !important;
+}
+
+/* Navbar */
+.navbar {
+    background-color: var(--fk-blue) !important;
+    color: var(--fk-white) !important;
+    box-shadow: 0 1px 2px 0 rgba(0,0,0,.1);
+}
+.navbar-brand, .nav-link, .navbar-brand:hover, .nav-link:hover {
+    color: var(--fk-white) !important;
+}
+
+/* Search Bar */
+.form-control {
+    border-radius: 2px !important;
+    border: none;
+    box-shadow: 0 2px 4px 0 rgba(0,0,0,.23);
+}
+
+/* Cards */
+.card {
+    border: none !important;
+    border-radius: 2px !important;
+    background: var(--fk-white);
+    transition: box-shadow 0.2s ease;
+}
+.card:hover {
+    box-shadow: 0 3px 16px 0 rgba(0,0,0,.11) !important;
+}
+
+/* Buttons */
+.btn-primary {
+    background-color: var(--fk-yellow) !important;
+    border: none !important;
+    color: var(--fk-white) !important;
+    font-weight: 500;
+    border-radius: 2px !important;
+    box-shadow: 0 1px 2px 0 rgba(0,0,0,.2);
+}
+.btn-outline-primary {
+    color: var(--fk-blue) !important;
+    border-color: var(--fk-blue) !important;
+    border-radius: 2px !important;
+}
+.btn-outline-primary:hover {
+    background-color: var(--fk-blue) !important;
+    color: var(--fk-white) !important;
+}
+
+/* Titles */
+h1, h2, h3, h4, h5, h6 {
+    font-weight: 500 !important;
+}
+
+/* Product Specifics */
+.text-primary {
+    color: var(--fk-blue) !important;
+}
+.text-success {
+    color: #388e3c !important; /* Flipkart Green for offers */
+}
+
+/* Footer */
+footer {
+    background-color: #172337 !important;
+    color: var(--fk-white) !important;
+}
+footer h5, footer h6, footer a {
+    color: var(--fk-white) !important;
+}
+
+/* Top Navbar Enhancements */
+.navbar-nav .nav-link {
+    display: flex;
+    align-items: center;
+    padding: 0.5rem 0.75rem !important;
+    border-radius: 4px;
+    transition: background-color 0.2s, color 0.2s;
+}
+
+/* Hover effects for top icons */
+.navbar-nav .nav-link:hover {
+    background-color: rgba(255, 255, 255, 0.15) !important;
+}
+
+/* Distinct subtle colors for badges to make them pop cleanly */
+.badge.bg-danger {
+    background-color: #ff6161 !important; /* Brighter red for cart */
+    box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+}
+.badge.bg-warning {
+    background-color: #ffc107 !important; /* Vivid yellow for notifications */
+    box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+}
+
+/* Search bar alignment fix */
+.d-flex.mx-auto.w-50 {
+    align-items: center;
+}
+.d-flex.mx-auto.w-50 .form-control {
+    height: 40px;
+}
+.d-flex.mx-auto.w-50 .btn {
+    height: 40px;
+    display: flex;
+    align-items: center;
+}
+
+/* Search Bar Styling (Flipkart Style) */
+.navbar .input-group {
+    box-shadow: 0 2px 4px 0 rgba(0,0,0,.23);
+    border-radius: 2px;
+    overflow: hidden;
+}
+.navbar .input-group .form-control {
+    border: none;
+    padding-left: 15px;
+    font-size: 0.95rem;
+    box-shadow: none;
+}
+.navbar .input-group .form-control:focus {
+    box-shadow: none;
+}
+.navbar .input-group .btn {
+    background-color: #fff !important;
+    color: var(--fk-blue) !important;
+    border-radius: 0;
+}
+
+/* Make Navbar Bigger */
+.navbar {
+    min-height: 80px;
+}
+.navbar-brand {
+    font-size: 1.75rem !important;
+    letter-spacing: 0.5px;
+}
+.navbar-nav .nav-link {
+    font-size: 1.1rem;
+    padding: 0.75rem 1rem !important;
+}
+.navbar .input-group .form-control {
+    height: 45px;
+    font-size: 1.05rem;
+}
+.navbar .input-group .btn {
+    height: 45px;
+    width: 55px;
+}
+.navbar .bi {
+    font-size: 1.6rem !important;
+}

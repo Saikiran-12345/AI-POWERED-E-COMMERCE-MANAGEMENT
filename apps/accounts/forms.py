@@ -12,14 +12,15 @@ class UserRegistrationForm(UserCreationForm):
         model = User
         fields = ('email', 'first_name', 'last_name', 'phone_number', 'role')
 
-class UserLoginForm(forms.Form):
-    def __init__(self, request=None, *args, **kwargs):
-        self.request = request
-        super().__init__(*args, **kwargs)
+from django.contrib.auth.forms import AuthenticationForm
 
-    email = forms.EmailField(widget=forms.EmailInput(attrs={'class': 'form-control', 'placeholder': 'Email'}))
-    password = forms.CharField(widget=forms.PasswordInput(attrs={'class': 'form-control', 'placeholder': 'Password'}))
-    remember_me = forms.BooleanField(required=False)
+class UserLoginForm(AuthenticationForm):
+    def __init__(self, request=None, *args, **kwargs):
+        super().__init__(request, *args, **kwargs)
+        self.fields['username'].widget.attrs.update({'class': 'form-control', 'placeholder': 'Email'})
+        self.fields['password'].widget.attrs.update({'class': 'form-control', 'placeholder': 'Password'})
+    
+    remember_me = forms.BooleanField(required=False, widget=forms.CheckboxInput(attrs={'class': 'form-check-input'}))
 
 class UserProfileUpdateForm(forms.ModelForm):
     class Meta:
@@ -33,3 +34,4 @@ class UserProfileDetailForm(forms.ModelForm):
 
 class CustomPasswordChangeForm(PasswordChangeForm):
     pass
+

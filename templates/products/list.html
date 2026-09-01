@@ -89,7 +89,7 @@
             </div>
             {% endif %}
           </a>
-          {% if user.is_authenticated and user.is_customer %}
+          {% if user.is_authenticated %}
           <form method="post" action="/wishlist/add/{{ product.pk }}/">
             {% csrf_token %}
             <button class="wishlist-btn" type="submit" title="Add to Wishlist">
@@ -132,7 +132,7 @@
                 <span class="badge bg-danger">Out of Stock</span>
                 {% endif %}
               </div>
-              {% if user.is_authenticated and user.is_customer %}
+              {% if user.is_authenticated %}
               <form method="post" action="/cart/add/{{ product.pk }}/" class="mt-2">
                 {% csrf_token %}
                 <input type="hidden" name="quantity" value="1">
@@ -191,3 +191,4 @@
   </div>
 </div>
 {% endblock %}
+

@@ -1,9 +1,9 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{% block title %}ShopAI — AI-Powered E-Commerce{% endblock %}</title>
+    <title>{% block title %}ShopAI â€” AI-Powered E-Commerce{% endblock %}</title>
     <meta name="description" content="{% block meta_description %}AI-Powered E-Commerce Management & Recommendation SaaS{% endblock %}">
 
     <!-- Bootstrap 5 -->
@@ -18,8 +18,8 @@
 <body class="{% block body_class %}{% endblock %}">
 
 <!-- Navigation -->
-<nav class="navbar navbar-expand-lg navbar-dark bg-primary shadow-sm">
-    <div class="container">
+<nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm py-3">
+    <div class="container-fluid px-4">
         <a class="navbar-brand fw-bold fs-4" href="/">
             <i class="bi bi-shop-window me-2"></i>ShopAI
         </a>
@@ -63,7 +63,7 @@
                 {% if user.is_customer %}
                 <li class="nav-item">
                     <a class="nav-link position-relative" href="/cart/">
-                        <i class="bi bi-cart3 fs-5"></i>
+                        <i class="bi bi-cart3 fs-4"></i>
                         {% if cart_count > 0 %}
                         <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
                             {{ cart_count }}
@@ -74,7 +74,7 @@
                 <!-- Wishlist -->
                 <li class="nav-item">
                     <a class="nav-link" href="/wishlist/">
-                        <i class="bi bi-heart fs-5"></i>
+                        <i class="bi bi-heart fs-4"></i>
                     </a>
                 </li>
                 {% endif %}
@@ -82,7 +82,7 @@
                 <!-- Notifications -->
                 <li class="nav-item">
                     <a class="nav-link position-relative" href="/notifications/">
-                        <i class="bi bi-bell fs-5"></i>
+                        <i class="bi bi-bell fs-4"></i>
                         {% if unread_notification_count > 0 %}
                         <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-warning text-dark">
                             {{ unread_notification_count }}
@@ -95,7 +95,7 @@
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" id="userMenu" role="button"
                        data-bs-toggle="dropdown">
-                        <i class="bi bi-person-circle me-1"></i>
+                        <i class="bi bi-person-circle fs-4 me-1 align-middle"></i>
                         {{ user.get_short_name }}
                         <span class="badge bg-secondary ms-1">{{ user.role }}</span>
                     </a>
@@ -150,7 +150,7 @@
                 {% else %}
                 <li class="nav-item">
                     <a class="nav-link" href="/accounts/login/">
-                        <i class="bi bi-box-arrow-in-right me-1"></i>Login
+                        <i class="bi bi-box-arrow-in-right fs-4 me-1 align-middle"></i>Login
                     </a>
                 </li>
                 <li class="nav-item">
@@ -166,7 +166,7 @@
 
 <!-- Messages -->
 {% if messages %}
-<div class="container mt-3">
+<div class="container-fluid px-4 mt-3">
     {% for message in messages %}
     <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
         {{ message }}
@@ -177,13 +177,13 @@
 {% endif %}
 
 <!-- Main Content -->
-<main class="{% block main_class %}container my-4{% endblock %}">
+<main class="{% block main_class %}container-fluid px-4 my-4{% endblock %}">
     {% block content %}{% endblock %}
 </main>
 
 <!-- Footer -->
-<footer class="bg-dark text-light py-5 mt-5">
-    <div class="container">
+<footer class="bg-light text-dark py-5 mt-5">
+    <div class="container-fluid px-4">
         <div class="row">
             <div class="col-md-4">
                 <h5 class="fw-bold mb-3">
@@ -194,7 +194,7 @@
                     Built with Django + scikit-learn.
                 </p>
                 <p class="text-warning small">
-                    ⚠️ Payment system is simulated for demo purposes only.
+                    âš ï¸ Payment system is simulated for demo purposes only.
                 </p>
             </div>
             <div class="col-md-2">
@@ -224,9 +224,9 @@
                 </p>
             </div>
         </div>
-        <hr class="border-secondary">
+        <hr class="border-light">
         <div class="text-center text-muted small">
-            <p class="mb-0">© 2024 ShopAI SaaS — Educational/Portfolio Project</p>
+            <p class="mb-0">Â© 2024 ShopAI SaaS â€” Educational/Portfolio Project</p>
         </div>
     </div>
 </footer>
@@ -241,3 +241,12 @@
 {% block extra_js %}{% endblock %}
 </body>
 </html>
+
+
+
+
+
+
+
+
+
